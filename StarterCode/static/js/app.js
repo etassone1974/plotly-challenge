@@ -49,6 +49,7 @@ function displayPlots (subjectID) {
         // Using an index of 0 as subject_samples is an array of length 1
         console.log(subject_samples[0]);
 
+        // BAR CHART
         // Retrieve Top 10 sample values 
         // Already sorted in JSON data so can use .slice for values
         let sampleValuesTop10 = subject_samples[0].sample_values.slice(0,10);
@@ -86,9 +87,15 @@ function displayPlots (subjectID) {
             text: otuLabelsTop10.reverse()
           }];
           
-        // Use plotly to display bar chart at div ID "bar" with barData
-        Plotly.newPlot('bar', barData);
+        // Set title for bar chart
+        let barLayout = {
+            title: "Top 10 OTU IDs by Sample Values"
+        };
 
+        // Use plotly to display bar chart at div ID "bar" with barData
+        Plotly.newPlot('bar', barData, barLayout);
+
+        // BUBBLE CHART
         // Set up data for bubble chart
         // Parameters set as given in assignment instructions
         let  bubbleData = [{
@@ -102,14 +109,60 @@ function displayPlots (subjectID) {
             text: subject_samples[0].otu_labels
           }];
 
+        // Set title of bubble chart
         // Set name of x-axis for bubble chart
         let bubbleLayout = {
+            title: "Bubble Chart of all OTU IDs",
             xaxis: { title: "OTU ID" }
         };
 
-        // Use plotly to display bubble chart at div ID "bubble" with barData and barLayout
+        // Use plotly to display bubble chart at div ID "bubble" with bubbleData and bubbleLayout
         Plotly.newPlot('bubble', bubbleData, bubbleLayout);
 
+        // GAUGE CHART
+        // Filter metadata set to return only metadata for matching ID and subjectID function parameter
+        // i.e. Only returns metadata for the desired subject
+        let subject_metadata = data.metadata.filter(subject => subject.id == subjectID)
+
+        // Display metadata of hand wishing frequency to console for checking
+        // Using an index of 0 as subject_metadata is an array of length 1
+        console.log(subject_metadata[0].wfreq);
+
+        let  gaugeData = [{
+            type: "indicator",
+            mode: "gauge+number",
+            value: subject_metadata[0].wfreq,
+            title: { text: "Scrubs per Week" },
+            gauge: {
+                axis: { 
+                    range: [0, 9],
+                    tickwidth: 2, 
+                    tickcolor: "darkblue",
+                    tickmode: "array",
+                    tickvals: [0, 1, 2, 3, 4, 5, 6, 7, 8, 9],
+                    ticktext: ["0", "1", "2","3", "4", "5", "6", "7", "8", "9"]
+                },
+            bar: { color: "darkblue" },
+            steps: [
+                { range: [0, 3], color: "lightcyan" },
+                { range: [3, 6], color: "deepskyblue"},
+                { range: [6, 9], color: "royalblue" }
+              ],
+            }
+  
+        }];
+
+        // Set title of gauge chart in bold
+        // Set background colour of chart are to "lavender"
+        // Set the font for the chart to Arial in "darkblue" colour 
+        let gaugeLayout = {
+            title: "<b>Belly Button Washing Frequency</b>",
+            paper_bgcolor: "lavender",
+            font: { color: "darkblue", family: "Arial" }
+        };
+
+        // Use plotly to display gauge chart at div ID "gauge" with gaugeData and gaugeLayout
+        Plotly.newPlot('gauge', gaugeData, gaugeLayout);
     });
 }
 
