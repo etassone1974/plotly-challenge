@@ -8,4 +8,4 @@ https://etassone1974.github.io/plotly-challenge/
 Website also available at:
 https://etassone1974.github.io/plotly-challenge/StarterCode/index.html
 
-Have had some odd issues with root directory index.html redirection (worked perfectly with previous assignment -- maybe some JavaScript security issue?).
+Have had some odd issues with root directory index.html redirection (worked perfectly with a previous assignment -- maybe some JavaScript security issue?).
