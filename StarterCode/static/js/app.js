@@ -92,7 +92,7 @@ function displayPlots (subjectID) {
             title: "Top 10 OTU IDs by Sample Values"
         };
 
-        // Use plotly to display bar chart at div ID "bar" with barData
+        // Use plotly to display bar chart at div ID "bar" with barData and barLayout
         Plotly.newPlot('bar', barData, barLayout);
 
         // BUBBLE CHART
@@ -128,11 +128,22 @@ function displayPlots (subjectID) {
         // Using an index of 0 as subject_metadata is an array of length 1
         console.log(subject_metadata[0].wfreq);
 
+        // Set up data for gauge chart
         let  gaugeData = [{
+            // Set type and mode of chart
+            // "gauge+number" refers to a gauge and numeric representation of data
             type: "indicator",
             mode: "gauge+number",
+            // Retrieve washing frequency from metadata for this subject
             value: subject_metadata[0].wfreq,
+            // Set secondary title for gauge chart
             title: { text: "Scrubs per Week" },
+            // Set options for gauge
+            // Axis should range from 0 to 9
+            // Set tickwidth to 2 and tickcolor to "darkblue"
+            // Set tickmode to array to define ticks precisely
+            // Set array of tickvals from 0 to 9
+            // Set array of ticktext for labels on gauge -- 0 to 9 as strings
             gauge: {
                 axis: { 
                     range: [0, 9],
@@ -142,7 +153,10 @@ function displayPlots (subjectID) {
                     tickvals: [0, 1, 2, 3, 4, 5, 6, 7, 8, 9],
                     ticktext: ["0", "1", "2","3", "4", "5", "6", "7", "8", "9"]
                 },
+            // Set bar of gauge to "darkblue"
             bar: { color: "darkblue" },
+            // Set differing colours for ticks in different ranges
+            // Progressively becomes darker blue
             steps: [
                 { range: [0, 3], color: "lightcyan" },
                 { range: [3, 6], color: "deepskyblue"},
